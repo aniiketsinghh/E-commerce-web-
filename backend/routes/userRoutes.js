@@ -6,6 +6,6 @@ import middleware from '../middlewares/auth.middleware.js';
 router.post('/register',registerUser);
 router.post('/login',loginUser);
 router.get('/getusers',getUsers);
-router.get('/profile',middleware,profileUser);
+router.get('/profile/:id',middleware,profileUser);
 
 export default router

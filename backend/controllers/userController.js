@@ -77,7 +77,8 @@ export const getUsers = async (req, res) => {
 }
 export const profileUser = async (req, res) => {
      try{
-
+        const user=await User.findById(req.params.id).select('-password');
+        res.status(200).json({ message: "User fetched successfully" ,success:true,user});
      }catch(err){
         console.log(err.message);
         res.status(500).json({ message: "Server Error" ,success:false});
