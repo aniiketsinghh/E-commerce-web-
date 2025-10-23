@@ -5,7 +5,7 @@ import authMiddleware from "../middlewares/auth.middleware.js";
 export const addToCart=async(req,res)=>{
     try{
         const {productId,title,price,quantity,image}=req.body;
-        const userId=req.user._id;
+        const userId=req.user.id;
         const user=await User.findById(userId);
         if(!user){
             return res.status(404).json({message:"user not found",success:false});
@@ -30,7 +30,7 @@ export const addToCart=async(req,res)=>{
 
 export const getCartItems=async(req,res)=>{
     try{
-        const userId=req.user._id;
+        const userId=req.user.id;
         const cart=await Cart.findOne({userId});
         if(!cart){
             return res.status(404).json({message:"cart not found",success:false});
@@ -44,7 +44,7 @@ export const getCartItems=async(req,res)=>{
 export const removeFromCart=async(req,res)=>{
     try{
         const {productId}=req.params;
-        const userId=req.user._id;
+        const userId=req.user.id;
         const cart=await Cart.findOne({userId});
         if(!cart){
             return res.status(404).json({message:"cart not found",success:false});
@@ -59,7 +59,7 @@ export const removeFromCart=async(req,res)=>{
 
 export const clearCart=async(req,res)=>{
     try{
-        const userId=req.user._id;
+        const userId=req.user.id;
         const cart=await Cart.findOne({userId});
         if(!cart){
             return res.status(404).json({message:"cart not found",success:false});

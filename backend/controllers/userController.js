@@ -77,7 +77,8 @@ export const getUsers = async (req, res) => {
 }
 export const profileUser = async (req, res) => {
      try{
-        const user=await User.findById(req.params.id).select('-password');
+        const userId=req.user;
+        const user=await User.findById(userId).select('-password');
         res.status(200).json({ message: "User fetched successfully" ,success:true,user});
      }catch(err){
         console.log(err.message);

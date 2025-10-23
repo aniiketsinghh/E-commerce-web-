@@ -1,7 +1,7 @@
 import Product from "../models/productModel.js";
 
 export const createProduct=async(req,res)=>{
-    console.log("haa yha tk shi hai");
+    
     try{
         const {title,description,price,image,category,quantity}=req.body;
         if(!title || !description || !price || !image || !category || !quantity){
@@ -25,8 +25,8 @@ export const createProduct=async(req,res)=>{
 
 export const getAllProducts=async(req,res)=>{
      try{
-        const product=await Product.find().sort({createdAt:-1});
-        return res.status(200).json({message:"All products fetched successfully",success:true,product});
+        const products=await Product.find().sort({createdAt:-1});
+        return res.status(200).json({message:"All products fetched successfully",success:true,products});
     }catch(err){
         console.log(err.message);
         return res.status(500).json({message:"Error in fetch all product from backend",success:false});
