@@ -1,4 +1,7 @@
+ // home page product look like
+
 import React, { useState } from "react";
+import { Link } from "react-router";
 
 const Card = ({ item }) => {
   const [added, setAdded] = useState(false);
@@ -10,18 +13,22 @@ const Card = ({ item }) => {
 
   return (
     <div
-      className="
-        bg-white border border-gray-200 rounded-2xl shadow-md 
-        flex flex-col items-center text-center p-5 
-        hover:shadow-lg hover:-translate-y-1 transition-all duration-300
-      "
+       className="
+    bg-white border border-gray-200 rounded-2xl shadow-md 
+    flex flex-col items-center text-center p-5 
+    hover:shadow-lg hover:-translate-y-1 transition-all duration-300
+    w-70 sm:w-88 md:w-85
+  "
     >
       {/* Product Image */}
+      <Link to={`/product/${item._id}`}>
+        
       <img
         src={item.image}
         alt={item.title}
-        className="w-48 h-48 object-cover rounded-xl mb-3"
+        className="w-70 h-48 object-cover rounded-xl mb-3"
       />
+      </Link>
 
       {/* Title */}
       <h2 className="text-lg font-semibold text-gray-800 mb-1">
@@ -36,9 +43,13 @@ const Card = ({ item }) => {
       </p>
 
       {/* Price */}
-      <p className="text-lg font-bold text-green-600 mb-3">
-        ₹{item.price}
-      </p>
+    <p className="text-2xl font-bold text-gray-900 mb-4 flex items-baseline">
+  <span className="text-sm -translate-y-1 mr-0.5">₹</span>
+  <span>{item.price.toLocaleString()}</span>
+  <span className="text-sm font-normal text-gray-500 ml-1">M.R.P</span>
+</p>
+
+      
 
       {/* Add to Cart Button */}
       <button
