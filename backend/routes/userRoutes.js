@@ -8,4 +8,5 @@ router.post('/login',loginUser);
 router.get('/getusers',getUsers);
 router.get('/profile/:id',middleware,profileUser);
 
+
 export default router
