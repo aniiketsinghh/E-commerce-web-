@@ -2,31 +2,55 @@ import User from "../models/userModel.js";
 import Cart from "../models/cartModel.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 
-export const addToCart=async(req,res)=>{
-    try{
-        const {productId,title,price,quantity,image}=req.body;
-        const userId=req.user.id;
-        const user=await User.findById(userId);
-        if(!user){
-            return res.status(404).json({message:"user not found",success:false});
-        }
-        let cart=await Cart.findOne({userId});
-        if(!cart){
-            cart=new Cart({userId,items:[]});
-        }
-        const itemIndex=cart.items.findIndex(item=>item.productId.toString()===productId);
-        if(itemIndex>-1){
-            cart.items[itemIndex].quantity+=Number(quantity);
-        }else{
-            const newItem={productId,title,price,quantity,image};
-            cart.items.push(newItem);
-        }
-        await cart.save();
-        res.status(200).json({message:"product added to cart",cart,success:true});
-    }catch(err){
-        res.status(500).json({message:"error in adding to cart",error:err.message,success:false});
+export const addToCart = async (req, res) => {
+  try {
+    const { productId, title, price, quantity, image } = req.body;
+    const userId = req.user.id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found", success: false });
     }
-}
+
+    let cart = await Cart.findOne({ userId });
+    if (!cart) {
+      cart = new Cart({ userId, items: [] });
+    }
+
+    // ✅ Convert everything safely
+    const qty = Number(quantity) || 1;
+    const pid = productId.toString();
+
+    // ✅ Find existing item by productId
+    const itemIndex = cart.items.findIndex(
+      (item) => item.productId.toString() === pid
+    );
+
+    if (itemIndex > -1) {
+      // ✅ Increase quantity instead of adding duplicate
+      cart.items[itemIndex].quantity += qty;
+    } else {
+      const newItem = { productId: pid, title, price, quantity: qty, image };
+      cart.items.push(newItem);
+    }
+
+    await cart.save();
+
+    return res.status(200).json({
+      message: "Product added/updated in cart",
+      cart,
+      success: true,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Error in adding to cart",
+      error: err.message,
+      success: false,
+    });
+  }
+};
+
+
 
 export const getCartItems=async(req,res)=>{
     try{
