@@ -55,5 +55,5 @@
 - MongoDB (Mongoose)
 - JWT Authentication
 - Cookies for session management
-git clone https://github.com/yourusername/exphere.git
+git clone https://github.com/aniiketsinghh/exphere.git
 cd exphere
