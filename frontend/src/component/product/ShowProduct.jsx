@@ -14,7 +14,7 @@ const ShowProduct = () => {
   }
 
   return (
-    <div className="px-4 py-10 max-w-7xl mx-auto">
+    <div className="px-2 py-2 max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold text-center mb-10 text-gray-800">
         Our Products
       </h1>
